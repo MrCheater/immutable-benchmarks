@@ -1,0 +1,16 @@
+{
+  "name": "immutable-benchmarks",
+  "version": "1.0.4",
+  "description": "Seamless-immutable vs Immutable.js vs Mori",
+  "main": "index.js",
+  "scripts": {
+    "start": "export NODE_ENV=production && node --expose-gc ./index.js"
+  },
+  "author": "MrCheater",
+  "license": "MIT",
+  "dependencies": {
+    "immutable": "^3.8.1",
+    "mori": "^0.3.2",
+    "seamless-immutable": "^6.1.0"
+  }
+}
