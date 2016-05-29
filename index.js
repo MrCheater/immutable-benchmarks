@@ -3,12 +3,30 @@ var immutableJs = require('immutable');
 var moriJs = require('mori');
 
 var REPEATS;
+var repeats = [1000, 5000, 10000, 50000, 100000, 500000, 1000000, 5000000];
+
+function getFormatedRepeats() {
+    switch(REPEATS) {
+        case 1000:     return '    1000';
+        case 5000:     return '    5000';
+        case 10000:    return '   10000';
+        case 50000:    return '   50000';
+        case 100000:   return '  100000';
+        case 500000:   return '  500000';
+        case 1000000:  return ' 1000000';
+        case 5000000:  return ' 5000000';
+    }
+}
 
 function test(callback) {
-    var startTime = Date.now();
-    callback();
-    return (Date.now() - startTime) + ' ms';
-    global.gc();
+    for(var i = 0; i < repeats.length; i++) {
+        REPEATS = repeats[i]
+        var startTime = Date.now();
+        callback();
+        var testTime = Date.now() - startTime;
+        console.log(getFormatedRepeats() + ' / ' + testTime);
+        global.gc();
+    }
 }
 
 //== get ==
@@ -348,51 +366,70 @@ function arraySetInMoriJs() {
     }
 }
 
-var repeats = [1000, 5000, 10000, 50000, 100000, 500000, 1000000];
-for(var i = 0; i < repeats.length; i++) {
-    REPEATS = repeats[i];
-    console.log('==== REPEATS = ' + REPEATS + '====');
+console.log('[get] Object Native (repeats / ms):');
+test(objectGetNative);
+console.log('[get] Object Seamless-immutable.js (repeats / ms): ');
+test(objectGetSeamlessImmutableJs);
+console.log('[get] Object Immutable.js (repeats / ms):');
+test(objectGetImmutableJs);
+console.log('[get] Object Mori.js (repeats / ms):');
+test(objectGetMoriJs);
+console.log('[get] Array Native (repeats / ms):');
+test(arrayGetNative);
+console.log('[get] Array Seamless-immutable.js (repeats / ms):');
+test(arrayGetSeamlessImmutableJs);
+console.log('[get] Array Immutable.js (repeats / ms):');
+test(arrayGetImmutablejs);
+console.log('[get] Array Mori.js (repeats / ms):');
+test(arrayGetMoriJs);
 
-    console.log('== get ===');
-    console.log('Object Native:                ' + test(objectGetNative));
-    console.log('Object Seamless-immutable.js: ' + test(objectGetSeamlessImmutableJs));
-    console.log('Object Immutable.js:          ' + test(objectGetImmutableJs));
-    console.log('Object Mori.js:               ' + test(objectGetMoriJs));
-    console.log('Array Native:                 ' + test(arrayGetNative));
-    console.log('Array Seamless-immutable.js:  ' + test(arrayGetSeamlessImmutableJs));
-    console.log('Array Immutable.js:           ' + test(arrayGetImmutablejs));
-    console.log('Array Mori.js:                ' + test(arrayGetMoriJs));
+console.log('[getIn] Object Native. GetIn (repeats / ms):');
+test(objectGetInNative);
+console.log('[getIn] Object Seamless-immutable (repeats / ms):');
+test(objectGetInSeamlessImmutableJs);
+console.log('[getIn] Object Immutable.js (repeats / ms):');
+test(objectGetInImmutableJs);
+console.log('[getIn] Object Mori.js (repeats / ms):');
+test(objectGetInMoriJs);
+console.log('[getIn] Array Native (repeats / ms):');
+test(arrayGetInNative);
+console.log('[getIn] Array Seamless-immutable.js (repeats / ms):');
+test(arrayGetInSeamlessImmutableJs);
+console.log('[getIn] Array Immutable.js (repeats / ms):');
+test(arrayGetInImmutableJs);
+console.log('[getIn] Array Mori.js (repeats / ms):');
+test(arrayGetInMoriJs);
 
-    console.log('== getIn ==');
-    console.log('Object Native. GetIn:         ' + test(objectGetInNative));
-    console.log('Object Seamless-immutable:    ' + test(objectGetInSeamlessImmutableJs));
-    console.log('Object Immutable.js:          ' + test(objectGetInImmutableJs));
-    console.log('Object Mori.js:               ' + test(objectGetInMoriJs));
-    console.log('Array Native:                 ' + test(arrayGetInNative));
-    console.log('Array Seamless-immutable.js:  ' + test(arrayGetInSeamlessImmutableJs));
-    console.log('Array Immutable.js:           ' + test(arrayGetInImmutableJs));
-    console.log('Array Mori.js:                ' + test(arrayGetInMoriJs));
+console.log('[set] Object Native (repeats / ms):');
+test(objectSetNative);
+console.log('[set] Object Seamless-immutable.js (repeats / ms):');
+test(objectSetSeamlessImmutableJs);
+console.log('[set] Object Immutable.js (repeats / ms):');
+test(objectSetImmutableJs);
+console.log('[set] Object Mori.js (repeats / ms):');
+test(objectSetMoriJs);
+console.log('[set] Array Native (repeats / ms):');
+test(arraySetNative);
+console.log('[set] Array Seamless-immutable.js (repeats / ms):');
+test(arraySetSeamlessImmutableJs);
+console.log('[set] Array Immutable.js (repeats / ms):');
+test(arraySetImmutableJs);
+console.log('[set] Array Mori.js (repeats / ms):');
+test(arraySetMoriJs);
 
-    console.log('== set ==');
-    console.log('Object Native:                ' + test(objectSetNative));
-    console.log('Object Seamless-immutable.js: ' + test(objectSetSeamlessImmutableJs));
-    console.log('Object Immutable.js:          ' + test(objectSetImmutableJs));
-    console.log('Object Mori.js:               ' + test(objectSetMoriJs));
-    console.log('Array Native:                 ' + test(arraySetNative));
-    console.log('Array Seamless-immutable.js:  ' + test(arraySetSeamlessImmutableJs));
-    console.log('Array Immutable.js:           ' + test(arraySetImmutableJs));
-    console.log('Array Mori.js:                ' + test(arraySetMoriJs));
-
-    console.log('== setIn ==');
-    console.log('Object Native:                ' + test(objectSetInNative));
-    console.log('Object Seamless-immutable.js: ' + test(objectSetInSeamlessImmutableJs));
-    console.log('Object Immutable.js:          ' + test(objectSetInImmutableJs));
-    console.log('Object Mori.js:               ' + test(objectSetInMoriJs));
-    console.log('Array Native:                 ' + test(arraySetInNative));
-    console.log('Array Seamless-immutable.js:  ' + test(arraySetInSeamlessImmutableJs));
-    console.log('Array Immutable.js:           ' + test(arraySetInImmutableJs));
-    console.log('Array Mori.js:                ' + test(arraySetInMoriJs));
-
-    console.log();
-}
-
+console.log('[setIn] Object Native (repeats / ms):');
+test(objectSetInNative);
+console.log('[setIn] Object Seamless-immutable.js (repeats / ms):');
+test(objectSetInSeamlessImmutableJs);
+console.log('[setIn] Object Immutable.js (repeats / ms):');
+test(objectSetInImmutableJs);
+console.log('[setIn] Object Mori.js (repeats / ms):');
+test(objectSetInMoriJs);
+console.log('[setIn] Array Native (repeats / ms):');
+test(arraySetInNative);
+console.log('[setIn] Array Seamless-immutable.js (repeats / ms):');
+test(arraySetInSeamlessImmutableJs);
+console.log('[setIn] Array Immutable.js (repeats / ms):');
+test(arraySetInImmutableJs);
+console.log('[setIn] Array Mori.js (repeats / ms):');
+test(arraySetInMoriJs);

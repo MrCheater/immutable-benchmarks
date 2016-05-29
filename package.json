@@ -1,6 +1,6 @@
 {
   "name": "immutable-benchmarks",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Seamless-immutable vs Immutable.js vs Mori",
   "main": "index.js",
   "scripts": {
