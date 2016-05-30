@@ -319,6 +319,7 @@
  5000000 / 3944
 ```
 ####[setIn] Array Seamless-immutable.js (repeats / ms):
+```javascript
     1000 / 30
     5000 / 124
    10000 / 251
